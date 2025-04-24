@@ -1,0 +1,106 @@
+/* 1) Game-card kontaineri: luo 3D-kontekstin */
+game-card {
+  display: block;                     /* varmistaa kokoa ja positiointia tukevan boksin */
+  position: relative;   
+  width: 8%;              /* lapset absoluuteiksi suhteessa kontaineriin */
+  max-width: 100%;                        /* mukautuva koko */
+  aspect-ratio: 2.5/3.5;              /* korkeuden laskenta selaimen toimesta */
+  max-height: fit-content;
+  background-color: var(--white);
+  border: solid var(--black) 1px;
+  border-radius: 1vh;
+
+  /* 3D-asetukset */
+  transform-style: preserve-3d;       /* lapset 3D-tilaan */
+  backface-visibility: visible;       /* itse kontainerin takapuolen näkyvyys */
+  transition: transform 0.6s;         /* kääntöanimaatio */
+  will-change: transform;             /* optimoi GPU-layerin luonnin etukäteen */
+}
+game-card:active {
+    cursor: grabbing;
+}
+game-card img {
+    max-width: 100%;
+}
+.corner {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    padding: 1vh;
+    height: fit-content;
+}
+.top-left {
+    left: 0;
+    top: 0;
+}
+.bottom-right {
+    right: 0;
+    bottom: 0;
+    rotate: 180deg;
+}
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 30%;
+    display: flex;
+    justify-content: center;
+}
+.symbols {
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 10%;
+    flex-wrap: wrap;
+    overflow: hidden;
+}
+
+
+ figure[aria-label="ässä"]{
+    position: relative;
+    font-size: large;
+}
+
+ game-card[country="♦"], game-card[country="♥"]{
+    color: var(--red);
+  }
+/* 2) Molemmat faces: absolute koko alalle päällekkäin */
+frontface,
+backface {
+  position: absolute;                 /* poistaa normaalin flow’n, layout-laskenta kerran */
+  top: 0; left: 0;                    /* nollaa offsetsit */
+  width: 100%; height: 100%;          /* peittää koko kontainerin */
+
+  display: block;                     /* inlinein sijaan boksimalli */
+  /* vaihtoehto: inline-block → lisää calculated layout-kutsuja */
+}
+
+/* 3) Frontface: näkyvissä aina */
+frontface {
+  backface-visibility: hidden;        /* kun kortti kääntyy, front ei näy takaa */
+  z-index: 2;   
+  border-radius: 1vh;                      /* päällekkäisyyksissä etualalle */
+}
+
+/* 4) Backface: käännetty 180° */
+backface {
+  backface-visibility: hidden;        /* sama idea kuin frontissa */
+  transform: rotateY(180deg);         /* kääntää 3D-avaruudessa */
+  z-index: 1;
+  border-radius: 1vh;
+
+  /* vendor-prefiksit vanhoille WebKit-selaimille – valinnainen, jos ei Safari<14 tukea */
+  /* -webkit-backface-visibility: hidden; */
+  /* -webkit-transform: rotateY(180deg); */
+}
+
+/* 5) Sisäinen kuva: skaalataan oikein */
+backface img {
+  display: block;                     /* poistaa inline-valintojen marginaalit */
+  max-width: 100%;                    /* skaalautuu kontaineriin */
+  height: auto;   
+  border-radius: 1vh;                    /* oikea suhde */
+}

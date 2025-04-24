@@ -1,0 +1,37 @@
+/* 1) Footer-kontaineri: vaakasuora scrollaus */
+footer {
+    margin: 0;
+    padding-top: 10vh;
+    display: flex;                  /* yksi laskenta, lapset riville */
+    flex-direction: row;
+    flex-wrap: nowrap;              /* ei rivinvaihtoja */
+    justify-content: space-evenly;
+    align-items: center;
+  
+    position: relative;
+    width: 100%;
+    height: auto;                   /* vältä fit-content-painetta layoutissa */
+  
+    overflow-x: scroll;             /* aina scroll-konteksti */
+    overflow-y: hidden;             /* ei pystysuoraa scrollia */
+    -webkit-overflow-scrolling: touch; /* iOS momentum-scroll */
+  
+    /* Valinnainen: scroll-snap napsautukseen */
+    scroll-snap-type: x mandatory;
+  }
+  
+  /* 2) Game-cardit: estä kutistuminen ja ota scroll-snap käyttöön */
+  footer game-card {
+    flex: 0 0 auto;                 /* ei veny eikä kutistu */
+    min-width: 80px;
+    margin: 1vh;
+    cursor: pointer;
+  
+    /* scroll-snap: kortti alkaa aina tästä kohdasta */
+    scroll-snap-align: start;
+  }
+
+  footer game-card:hover {
+    scale: 1.03;
+  }
+  
