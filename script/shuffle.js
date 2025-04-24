@@ -25,7 +25,6 @@ export function shuffleCards() {
     // 2) Flip & pino lopuksi
     setTimeout(() => {
       let offset = `${zIndices[i]/4}`;
-      console.log(offset)
       card.style.transition = "transform 0.6s ease";
       card.style.transform  = `translate(${offset}px, -${offset}px) rotateZ(0deg) rotateY(180deg)`;
     }, 1200);

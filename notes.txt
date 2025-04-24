@@ -1,1 +1,1 @@
-Seuraavaksi laajenna game modulaariseksi kansioksi.
+Ongelma 2  hyväksyy 7 vaikka vaikka 2 päälle voi pelata vain 2
