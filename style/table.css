@@ -1,0 +1,30 @@
+game-table {
+    min-width: 100%;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    justify-content: space-evenly;
+    padding: 0vh 0vh 1vh 0vh;
+}
+
+left-leg {
+    width: 1.5vh;
+    height: 20vh;
+    background-color: var(--brown);
+    position: absolute;
+    left: 4vh;
+    bottom: -19vh;
+    rotate: -30deg;
+    border-radius: 1vh;
+}
+
+right-leg {
+    width: 1.5vh;
+    height: 20vh;
+    background-color: var(--brown);
+    position: absolute;
+    right: 4vh;
+    bottom: -19vh;
+    rotate: 30deg;
+    border-radius: 1vh;
+}

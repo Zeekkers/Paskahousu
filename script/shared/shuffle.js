@@ -1,11 +1,12 @@
 // shuffle.js
 export function shuffleCards() {
-  const cards      = Array.from(document.querySelectorAll("game-card"));
-  const zIndices   = cards.map((_, i) => i);
-  const firstDelay = 100;    // ms ennen ensimmäistä siirtoa
-  const firstDur   = 1000;   // ms transform-animaation kesto
-  const secondDelay  = 1200; // ms ennen toinen liike
-  const secondDur    = 600;  // ms flip-animaation kesto
+  const container   = document.getElementById("pack");
+  const cards       = Array.from(container.querySelectorAll("game-card"));
+  const zIndices    = cards.map((_, i) => i);
+  const firstDelay  = 100;   // ms ennen ensimmäistä siirtoa
+  const firstDur    = 1000;  // ms transform-animaation kesto
+  const secondDelay = 1200;  // ms ennen toinen liike
+  const secondDur   = 600;   // ms flip-animaation kesto
 
   // 1) Fisher–Yates z-indekseille
   for (let i = zIndices.length - 1; i > 0; i--) {
@@ -33,7 +34,17 @@ export function shuffleCards() {
     }, secondDelay);
   });
 
-  // 3) Palauta Promise, joka resolveaa vasta kun kaikki animaatiot on ajettu läpi
+  // 3) Palauta Promise, ja odota animaatioiden loppuun ennen DOM-järjestystä
   const totalTime = secondDelay + secondDur; // 1200 + 600 = 1800ms
-  return new Promise(resolve => setTimeout(resolve, totalTime));
+  return new Promise(resolve => {
+    setTimeout(() => {
+      // DOM-järjestyksen päivitys z-indexin mukaisesti
+      const mapZ = new Map(cards.map((card, i) => [card, zIndices[i]]));
+      cards
+        .slice()
+        .sort((a, b) => mapZ.get(a) - mapZ.get(b))
+        .forEach(card => container.appendChild(card));
+      resolve();
+    }, totalTime);
+  });
 }

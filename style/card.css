@@ -14,7 +14,7 @@ game-card {
   /* 3D-asetukset */
   transform-style: preserve-3d;       /* lapset 3D-tilaan */
   backface-visibility: visible;       /* itse kontainerin takapuolen näkyvyys */
-  transition: transform 0.6s;         /* kääntöanimaatio */
+  transition: all 1s ease-in-out;        /* kääntöanimaatio */
   will-change: transform;             /* optimoi GPU-layerin luonnin etukäteen */
 }
 game-card:active {

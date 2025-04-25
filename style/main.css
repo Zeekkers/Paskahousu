@@ -2,7 +2,7 @@ main {
     
     display: flex;
     flex-direction: column;
-    position: relative;
+    position: fixed;
     width: 80%;
     height: fit-content;
     padding: 3vh 0vh 3vh 0vh;
@@ -11,20 +11,14 @@ main {
     justify-content: space-evenly;
     align-items: center;
     border-radius: 3vh;
-    border:solid brown 1vh;
+    border:solid var(--brown) 2vh;
+    z-index: 0;
 }
 main h1 {
     color: var(--white);
 }
-main div {
-    min-width: 100%;
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    justify-content: space-evenly;
-    padding: 0vh 0vh 1vh 0vh;
-}
-main div section {
+
+main game-table section {
     display: block;
     position: relative;
     aspect-ratio: 2.5/3.5;
@@ -32,7 +26,7 @@ main div section {
     border-radius: 1vh;
     min-width: 60px;
 }
-main div section img {
+main game-table section img {
 height: 100%;
 border-radius: 1vh;
 pointer-events: none;

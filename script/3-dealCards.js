@@ -1,49 +1,60 @@
-// 2-dealCards.js
-export default (() => {
+// 3-dealCards.js
+export default function dealCards() {
   return new Promise(resolve => {
-    const pack = Array.from(document.querySelectorAll("game-card"));
-    const footer = document.querySelector("footer");
-    const selected = pickRandom(pack, 5);
+    const pack     = Array.from(document.querySelectorAll("game-card")); // pohjassa on jo sekoitus tehtynä
+    const footer   = document.querySelector("footer");
+    const perHand  = 5;
 
-    const dealDelay = 500;     // delay per card
-    const moveDuration = 500;  // animation duration
-    const resetPause = 250;    // odotus animaation jälkeen
+    // pelaajalista: 'user' ensin, sitten botti1…bottiN
+    const players = [
+      "user",
+      ...Array.from({ length: playerCount - 1 }, (_, i) => `computer${i + 1}`)
+    ];
 
-    // Animoidaan ja siirretään kortit
-    selected.forEach((card, i) => {
-      const delayStart = i * dealDelay;
-      const resetDelay = delayStart + moveDuration + resetPause;
+    // tallenna kortit muistiin pelaajakohtaisesti
+    const hands = players.reduce((acc, p) => { acc[p] = []; return acc; }, {});
 
-      // 1) nosta kortti
-      setTimeout(() => {
-        card.style.transform = "translateY(100%)";
-      }, delayStart);
+    const dealDelayStep = 300; // ms väli jokaisen kortin jaon välillä
+    const moveDuration   = 500; // ms animaation kesto
 
-      // 2) siirrä footeriin
-      setTimeout(() => {
-        footer.appendChild(card);
-      }, delayStart + moveDuration);
+    let dealCount = 0;
+    // jaa round-robin: user → botti1 → botti2 → …
+    for (let round = 0; round < perHand; round++) {
+      for (let pi = 0; pi < players.length; pi++) {
+        const player    = players[pi];
+        const delayStart = dealCount * dealDelayStep;
 
-      // 3) palauta nollatilaan
-      setTimeout(() => {
-        card.style.transform = "translateY(0%) rotateY(0deg)";
-      }, resetDelay);
-    });
+        setTimeout(() => {
+          // 1) ota pakasta aina päällimmäinen kortti
+          const card = pack.pop();
+          hands[player].push(card);
 
-    // 4) resolvaa vasta kun viimeinenkin animaatio on valmis
-    const lastIndex = selected.length - 1;
-    const totalTime = lastIndex * dealDelay + moveDuration + resetPause;
-    setTimeout(resolve, totalTime);
+          // 2) animointi: user alas, botit ylös
+          card.style.transition = `transform ${moveDuration}ms ease`;
+          card.style.transform  = player === "user"
+            ? "translateY(200%)"
+            : "translateY(-200%) rotateY(180deg)";
+
+          // 3) append tai remove ja palauta transform
+          setTimeout(() => {
+            if (player === "user") {
+              footer.appendChild(card);
+            } else {
+              card.remove();
+            }
+            card.style.transform = "translateY(0%) rotateY(0deg)";
+          }, moveDuration);
+        }, delayStart);
+
+        dealCount++;
+      }
+    }
+
+    // 4) kun viimeinen animaatio on valmis, logataan bottien kädet ja resolve
+    const totalTime = dealCount * dealDelayStep + moveDuration;
+    setTimeout(() => {
+      globalThis.hands = hands
+      resolve();
+    }, totalTime);
   });
-})();
-
-// apufunktio
-function pickRandom(array, count) {
-  const copy = [...array];
-  const result = [];
-  for (let i = 0; i < count && copy.length > 0; i++) {
-    const idx = Math.floor(Math.random() * copy.length);
-    result.push(copy.splice(idx, 1)[0]);
-  }
-  return result;
 }

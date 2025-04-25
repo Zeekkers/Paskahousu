@@ -1,3 +1,6 @@
+Tekijät: Zeekkers, Jortsupetterson ja Chat SENPAI
+
+Globaalit muuttujat: playerCount, hands, firstPlay, players, Aloittaja, round
 
 A)
 1. createAndShufflePack
@@ -8,9 +11,12 @@ A)
 
 B)
 6. getActiveRules
-7. makeDraggable
-8. checkCardAgainstRules
-9. awaitOwnTurn
+7. trackRound
+8. makeDraggable
+9. checkCardAgainstRules
+10. awaitOwnTurn
 
 X) 
 Catch error
+
+Seuraavaksi vitoseen piilo transitiot...
