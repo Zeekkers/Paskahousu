@@ -17,6 +17,7 @@ class Card extends HTMLElement {
       const nimi = `${maa} ${this.cardRank}`;
   
       // 🧠 Mikrodata suoraan <card> elementtiin
+      this.id = nimi;
       this.setAttribute("itemscope", "");
       this.setAttribute("itemtype", "https://schema.org/GamePiece");
       this.setAttribute("itemprop", "gamePiece");

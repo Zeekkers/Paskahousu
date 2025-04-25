@@ -15,7 +15,7 @@ export function checkCardAgainstRules(attemptCard, activeRules, activeRank) {
     ace:     activeRules.canAceMoveToBin     && isAce,
     pictureCard:  activeRules.canUsePictureCards  && isPicture,
     ten:  activeRules.canTenMoveToBin && isTen,
-    number:     activeRules.canTenMoveToBin && isLessThanOrEqualToSelf && isTenOrLess,
+    number:     activeRules.canTenMoveToBin && isLessThanOrEqualToSelf && isTenOrLess && !isTwo,
     two: isTwo && !['10', 'A'].includes(activeRank)
   };
 

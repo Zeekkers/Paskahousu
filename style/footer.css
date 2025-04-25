@@ -35,3 +35,6 @@ footer {
     scale: 1.03;
   }
   
+  footer game-card img {
+    min-width: 300%;
+  }

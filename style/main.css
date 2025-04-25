@@ -7,7 +7,7 @@ main {
     height: fit-content;
     padding: 3vh 0vh 3vh 0vh;
     margin-left: 10%;
-    background-color: green;
+    background-color: var(--green);
     justify-content: space-evenly;
     align-items: center;
     border-radius: 3vh;
@@ -15,8 +15,6 @@ main {
 }
 main h1 {
     color: var(--white);
-    -webkit-text-stroke-width: 0.5px;  /* ääriviivan paksuus */
--webkit-text-stroke-color: black;
 }
 main div {
     min-width: 100%;
@@ -29,14 +27,24 @@ main div {
 main div section {
     display: block;
     position: relative;
-    background-color: var(--white);
     aspect-ratio: 2.5/3.5;
     width: 10%;
     border-radius: 1vh;
     min-width: 60px;
 }
+main div section img {
+height: 100%;
+border-radius: 1vh;
+pointer-events: none;
+object-fit: cover;
+}
+
 main game-card {
-    position: fixed;
     min-width: 60px;
     cursor: grab;
+    position: absolute;
+    left: 0;
+    top: 0;
+    min-height: 100%;
+    min-width: 100%;
 }

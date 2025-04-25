@@ -9,6 +9,7 @@ game-card {
   background-color: var(--white);
   border: solid var(--black) 1px;
   border-radius: 1vh;
+  font-size: small;
 
   /* 3D-asetukset */
   transform-style: preserve-3d;       /* lapset 3D-tilaan */
@@ -20,7 +21,16 @@ game-card:active {
     cursor: grabbing;
 }
 game-card img {
-    max-width: 100%;
+    min-width: 100%;
+}
+game-card.dragging {
+  opacity: 0.9;
+  transform: scale(1.03);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+#game.drag-over {
+  outline:2px dashed var(--red);
+  height: 100%;
 }
 .corner {
     position: absolute;
@@ -43,7 +53,7 @@ game-card img {
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    width: 30%;
+    max-width: 30%;
     display: flex;
     justify-content: center;
 }
@@ -61,7 +71,7 @@ game-card img {
 
  figure[aria-label="ässä"]{
     position: relative;
-    font-size: large;
+    font-size: xx-large;
 }
 
  game-card[country="♦"], game-card[country="♥"]{
