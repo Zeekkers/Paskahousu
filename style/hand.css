@@ -1,0 +1,14 @@
+player-hand {
+    position: relative;
+    bottom: 0%;
+    left: 0;
+    height: 30vh;
+    width: 100%;
+    background-color: aqua;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+

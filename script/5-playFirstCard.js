@@ -1,27 +1,17 @@
-console.log(firstPlay)
-console.log(starter)
+import { magneticPull } from "./shared/magneticPull.js";
 let whoStarts
+const gamePile = document.getElementById("game-chalk")
+
 export default function playFirstCard() {
+
+    
 return new Promise ( resolve => {
 if (starter === "user") {
     firstPlay.style.transition = "all 1s";
-    document.body.appendChild(firstPlay)
-setTimeout(()=>{
-Object.assign(firstPlay.style, {
-    position: "fixed",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%,-50%)"
-})},100);
-setTimeout(()=>{
-    document.getElementById("game").appendChild(firstPlay)
-    Object.assign(firstPlay.style, {
-    position: "absolute",
-    top: "0",
-    left: "50%",
-    transform: "translate(-50%,0%)"
-    });
-    },1000)
+
+    magneticPull(gamePile, firstPlay)
+
+
 resolve(console.log(`Käyttäjä aloitti pelin`))
 return
 }

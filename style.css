@@ -2,6 +2,8 @@
 @import url('./style/card.css');
 @import url('./style/footer.css');
 @import url('./style/table.css');
+@import url('./style/hand.css');
+@import url('./style/game-pile.css');
 
 :root {
     --white: #f5faff;

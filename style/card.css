@@ -21,7 +21,8 @@ game-card:active {
     cursor: grabbing;
 }
 game-card img {
-    min-width: 100%;
+  aspect-ratio: 2.5/3.5;
+    width: 200%;
 }
 game-card.dragging {
   opacity: 0.9;

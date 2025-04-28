@@ -1,6 +1,6 @@
 Tekijät: Zeekkers, Jortsupetterson ja Chat SENPAI
 
-Globaalit muuttujat: playerCount, hands, firstPlay, players, Aloittaja, round
+Globaalit muuttujat: playerCount, hands, firstPlay, players, Aloittaja, round, children
 
 A)
 1. createAndShufflePack

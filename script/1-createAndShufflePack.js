@@ -1,10 +1,12 @@
 // 1-createAndShufflePack.js
+import PlayerHand from '/script/shared/hand.js'
 import Card from '/script/shared/card.js';
 import { shuffleCards } from '/script/shared/shuffle.js';
 
 const pack       = document.getElementById("pack");
 const countries  = ['♠','♥','♦','♣'];
 const cardRanks  = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
+
 
 export default (async () => {
   // 1) Kerää kortit fragmenttiin ilman turhia reflowja

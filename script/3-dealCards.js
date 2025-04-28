@@ -1,8 +1,9 @@
 // 3-dealCards.js
+import { magneticPull } from "./shared/magneticPull.js";
 export default function dealCards() {
   return new Promise(resolve => {
     const pack     = Array.from(document.querySelectorAll("game-card")); // pohjassa on jo sekoitus tehtynä
-    const footer   = document.querySelector("footer");
+    const cardHand   = document.querySelector("player-hand");
     const perHand  = 5;
 
     // pelaajalista: 'user' ensin, sitten botti1…bottiN
@@ -14,8 +15,8 @@ export default function dealCards() {
     // tallenna kortit muistiin pelaajakohtaisesti
     const hands = players.reduce((acc, p) => { acc[p] = []; return acc; }, {});
 
-    const dealDelayStep = 300; // ms väli jokaisen kortin jaon välillä
-    const moveDuration   = 500; // ms animaation kesto
+    const dealDelayStep = 500; // ms väli jokaisen kortin jaon välillä
+    const moveDuration   = 1000; // ms animaation kesto
 
     let dealCount = 0;
     // jaa round-robin: user → botti1 → botti2 → …
@@ -31,18 +32,22 @@ export default function dealCards() {
 
           // 2) animointi: user alas, botit ylös
           card.style.transition = `transform ${moveDuration}ms ease`;
-          card.style.transform  = player === "user"
-            ? "translateY(200%)"
-            : "translateY(-200%) rotateY(180deg)";
+          if (player !== "user") {
+          card.style.transform  = "translateY(-600%) rotateY(180deg)";
+          } else {
+            let puller = document.querySelector("#puller")
+            let pulled = card
+            setTimeout(()=>{
+        magneticPull(puller,pulled)
+            },500)
+          }
 
           // 3) append tai remove ja palauta transform
           setTimeout(() => {
-            if (player === "user") {
-              footer.appendChild(card);
-            } else {
+            if (player !== "user") {
               card.remove();
             }
-            card.style.transform = "translateY(0%) rotateY(0deg)";
+              card.style.transform = "translateY(0%) rotateY(0deg)";
           }, moveDuration);
         }, delayStart);
 

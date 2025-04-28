@@ -1,5 +1,9 @@
 export default (() => {
-  function updateState(msg) {
+ globalThis.delay = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  
+  globalThis.updateState = (msg)=> {
     console.log(`[GAME] ${msg}`);
   }
 
