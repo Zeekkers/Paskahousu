@@ -1,45 +1,55 @@
 import { magneticPull } from "./shared/magneticPull.js";
+import gamePile from "./shared/gamePile.js";gamePile();
 let whoStarts
-const gamePile = document.getElementById("game-chalk")
+const slot = document.getElementById("slot");
 
 export default function playFirstCard() {
 
     
 return new Promise ( resolve => {
+
+// 1) Käyttäjä aloittaa
 if (starter === "user") {
-    firstPlay.style.transition = "all 1s";
+    magneticPull(slot, firstPlay).then(()=>
+        Object.assign(
+            firstPlay.style,{
+                transition: "all 1s",
+                position: "absolute",
+                top: "0",
+                left: "50%",
+                transform: "translate(-50%,0%)",
+                width: "8%",
+            })
+    )
 
-    magneticPull(gamePile, firstPlay)
-
-
-resolve(console.log(`Käyttäjä aloitti pelin`))
+resolve(updateState(`Käyttäjä aloitti pelin`))
 return
 }
 
+
+// 2) Tietokone aloittaa
 document.body.appendChild(firstPlay)
 Object.assign(firstPlay.style, {
     transition: "all 0.5s",
     position: "fixed",
     top: "-100%",
-    left: "56%",
+    left: "50%",
     transform: "translate(-50%,0%)"
-})
+});
+
+magneticPull(slot, firstPlay).then(()=>
+    Object.assign(
+        firstPlay.style,{
+            transition: "all 1s",
+            position: "absolute",
+            top: "0",
+            left: "50%",
+            transform: "translate(-50%,0%)",
+            width: "8%",
+        }));
 
 
 
-setTimeout(()=>{
-    Object.assign(firstPlay.style, {
-        position: "absolute",
-        top: "0",
-        left: "50%",
-        transform: "translate(-50%,175%)"
-    })
-},100)
-
-setTimeout(()=>{
-    document.getElementById("game").appendChild(firstPlay)
-    firstPlay.style.transform = "translate(-50%,0%)"
-    },500)
-    resolve(console.log(`Tietokone aloitti pelin`))
+    resolve(updateState(`Tietokone aloitti pelin`));
     return
 })};

@@ -1,5 +1,6 @@
 // 3-dealCards.js
 import { magneticPull } from "./shared/magneticPull.js";
+import PlayerHand from '/script/shared/hand.js'
 export default function dealCards() {
   return new Promise(resolve => {
     const pack     = Array.from(document.querySelectorAll("game-card")); // pohjassa on jo sekoitus tehtynä
@@ -15,11 +16,10 @@ export default function dealCards() {
     // tallenna kortit muistiin pelaajakohtaisesti
     const hands = players.reduce((acc, p) => { acc[p] = []; return acc; }, {});
 
-    const dealDelayStep = 500; // ms väli jokaisen kortin jaon välillä
-    const moveDuration   = 1000; // ms animaation kesto
+    const dealDelayStep = 600; // ms väli jokaisen kortin jaon välillä
+    const moveDuration   = 300; // ms animaation kesto
 
     let dealCount = 0;
-    // jaa round-robin: user → botti1 → botti2 → …
     for (let round = 0; round < perHand; round++) {
       for (let pi = 0; pi < players.length; pi++) {
         const player    = players[pi];

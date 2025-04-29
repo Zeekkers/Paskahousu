@@ -1,5 +1,9 @@
 export default (() => {
- globalThis.delay = (ms) => {
+
+// ===================
+// Globaalit helpperit
+// ===================
+  globalThis.delay = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
   
@@ -10,6 +14,27 @@ export default (() => {
   globalThis.round = Number(sessionStorage.getItem("round") || 1);
   let playersResult;
 
+
+  globalThis.addTrackedListener=(el, type, fn, opts)=> {
+    el._listeners = el._listeners || [];
+    el._listeners.push({type, fn, opts});
+    el.addEventListener(type, fn, opts);
+  }
+
+  globalThis.removeAllTracked=(el)=> {
+    if (!el._listeners) return;
+    for (const {type, fn, opts} of el._listeners) {
+      el.removeEventListener(type, fn, opts);
+    }
+    el._listeners.length = 0;
+  }
+  
+
+
+
+// ================
+// Varsinainen Peli
+// ================
   return new Promise(res => {
     if (document.readyState === 'loading') {
       window.addEventListener('DOMContentLoaded', res, { once: true });

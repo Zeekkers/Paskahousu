@@ -4,11 +4,13 @@ player-hand {
     left: 0;
     height: 30vh;
     width: 100%;
-    background-color: aqua;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: 10px;
+}
+player-hand game-card:hover {
+    cursor: pointer;
 }
 

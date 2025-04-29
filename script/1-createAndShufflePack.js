@@ -1,6 +1,6 @@
 // 1-createAndShufflePack.js
-import PlayerHand from '/script/shared/hand.js'
 import Card from '/script/shared/card.js';
+import PlayerHand from '/script/shared/hand.js'
 import { shuffleCards } from '/script/shared/shuffle.js';
 
 const pack       = document.getElementById("pack");

@@ -1,4 +1,4 @@
-
+import { magneticPull } from "./magneticPull.js";
 // 1) MutationObserver ja konfiguraatio valmiiksi
 const observerConfig = {
   childList: true,     // kuuntelee append/remove lapsimuutoksia
@@ -17,12 +17,13 @@ const observer = new MutationObserver((mutationsList) => {
 });
 
 // 2) Varsinainen renderöintifunktio
-export default async function playerHand() {
+export default function playerHand() {
   const hand = document.querySelector('player-hand');
   if (!hand) return;
 
+const isMarker = document.getElementById("puller")
 
-  // Lisätään puller
+  if (!isMarker) {
   const marker = document.createElement('div');
   marker.id = "puller";
   Object.assign(marker.style, {
@@ -32,15 +33,30 @@ export default async function playerHand() {
     width:         '8%',
     background:    'transparent',
     borderRadius:  '1vh',
+    pointerEvents: 'none',
   });
   hand.appendChild(marker);
-
-
-await delay(200)
+}
  
-  const children = Array.from(hand.children);
+  globalThis.children = Array.from(hand.children);
+  globalThis.dealPack    = Array.from(document.querySelectorAll("#pack game-card"));
 
+let initialDealt = false
+if (!initialDealt && children.length === 6) {
+  initialDealt = true;
+  console.log(initialDealt)
+}
 
+if (initialDealt && children.length < 6) {
+  const missing = 6 - children.length;
+  console.log(missing);
+  console.log(dealPack);
+  for (let i = 0; i < missing; i++) {
+    console.log("Olet gay")
+    const card = dealPack.pop();
+    magneticPull(marker, card);
+  }
+}
 
 
   // Z-index
@@ -56,31 +72,39 @@ await delay(200)
   const offsetY = 2;
   const offsetX = 20;
 
-  // Vasemmanpuoleiset
-  firstHalf.reverse().forEach((div, i) => {
-    const tx  = -(offsetX * (i + 1));
-    const ty  =  offsetY * (i + 2);
-    const rot = -angle * (i + 0.33);
-    const baseHover = `translate(${tx}px, ${ty}px) rotate(${rot - 10}deg)`;
-    const base      = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
+// Vasemmanpuoleiset
+firstHalf.reverse().forEach((div, i) => {
+  const tx  = -(offsetX * (i + 1));
+  const ty  =  offsetY * (i + 2);
+  const rot = -angle * (i + 0.33);
+  const baseHover = `translate(${tx}px, ${ty}px) rotate(${rot - 10}deg)`;
+  const base      = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
 
-    div.style.transform = base;
-    div.addEventListener('mouseenter', () => div.style.transform = baseHover);
-    div.addEventListener('mouseleave', () => div.style.transform = base);
+  div.style.transform = base;
+  addTrackedListener(div, "mouseenter", () => {
+    div.style.transform = baseHover;
   });
-
-  // Oikeanpuoleiset
-  secondHalf.forEach((div, i) => {
-    const tx  =  offsetX * (i + 1);
-    const ty  =  offsetY * (i + 2);
-    const rot =  angle * (i + 0.33);
-    const baseHover = `translate(${tx}px, ${ty}px) rotate(-10deg)`;
-    const base      = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
-
+  addTrackedListener(div, "mouseleave", () => {
     div.style.transform = base;
-    div.addEventListener('mouseenter', () => div.style.transform = baseHover);
-    div.addEventListener('mouseleave', () => div.style.transform = base);
   });
+});
+
+// Oikeanpuoleiset
+secondHalf.forEach((div, i) => {
+  const tx  =  offsetX * (i + 1);
+  const ty  =  offsetY * (i + 2);
+  const rot =  angle * (i + 0.33);
+  const baseHover = `translate(${tx}px, ${ty}px) rotate(-10deg)`;
+  const base      = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
+
+  div.style.transform = base;
+  addTrackedListener(div, "mouseenter", () => {
+    div.style.transform = baseHover;
+  });
+  addTrackedListener(div, "mouseleave", () => {
+    div.style.transform = base;
+  });
+});
 }
 
 // 3) Käynnistetään aluksi render ja observer

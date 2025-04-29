@@ -42,3 +42,14 @@ main game-card {
     min-height: 100%;
     min-width: 100%;
 }
+
+#slot {
+    min-width: 60px;
+    cursor: grab;
+    position: absolute;
+    left: 0;
+    top: 0;
+    min-height: 100%;
+    min-width: 100%;
+    background-color: brown;
+}
