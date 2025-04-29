@@ -8,7 +8,7 @@ export function magneticPull(puller, pulled) {
     top:        `${dr.top}px`,
     width:      `${dr.width}px`,
     height:     `${dr.height}px`,
-    transition: 'all 1s ease',
+    transition: 'all 0.5s ease',
     zIndex:     '10'
   });
   document.body.appendChild(pulled);

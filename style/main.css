@@ -3,6 +3,8 @@ main {
     display: flex;
     flex-direction: column;
     position: fixed;
+    top: 50%;
+    transform: translateY(-75%);
     width: 80%;
     height: fit-content;
     padding: 3vh 0vh 3vh 0vh;
@@ -14,7 +16,7 @@ main {
     border:solid var(--brown) 2vh;
     z-index: 0;
 }
-main h1 {
+main h2 {
     color: var(--white);
 }
 

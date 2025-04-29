@@ -41,22 +41,7 @@ const isMarker = document.getElementById("puller")
   globalThis.children = Array.from(hand.children);
   globalThis.dealPack    = Array.from(document.querySelectorAll("#pack game-card"));
 
-let initialDealt = false
-if (!initialDealt && children.length === 6) {
-  initialDealt = true;
-  console.log(initialDealt)
-}
 
-if (initialDealt && children.length < 6) {
-  const missing = 6 - children.length;
-  console.log(missing);
-  console.log(dealPack);
-  for (let i = 0; i < missing; i++) {
-    console.log("Olet gay")
-    const card = dealPack.pop();
-    magneticPull(marker, card);
-  }
-}
 
 
   // Z-index

@@ -5,6 +5,7 @@ getAllPlayers=playerCount,
 dealCards=hands, 
 chooseWhoStarts=firstPlay, players, Aloittaja 
 startjs=updateState,round 
+getActiveRules=activeRules
 
 A)
 1. createAndShufflePack

@@ -25,7 +25,7 @@ export default function chooseWhoStarts() {
         globalThis.firstPlay = matching[0];
         globalThis.starter = Aloittaja
   
-          resolve(console.log(`[GAME] ${JSON.stringify({ Aloittaja, Kortti: firstPlay })}`));
+          resolve(`${JSON.stringify({ Aloittaja, Kortti: firstPlay })}`);
           return;
         }
       }

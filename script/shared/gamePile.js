@@ -12,7 +12,6 @@ const observerConfig = {
     }
     finally {
 
-
     if(pile) observer.observe(pile, observerConfig)
     }
 })
@@ -20,5 +19,6 @@ const observerConfig = {
 export default function gamePile() {
     const slot = document.createElement("div");
     slot.id = "slot"
-    pile.appendChild(slot)
+    pile.appendChild(slot);
+
 }

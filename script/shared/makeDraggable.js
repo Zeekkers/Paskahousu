@@ -1,4 +1,4 @@
-export default (()=> {
+export default function makeDraggable () {
     const footer = document.querySelector('footer');
     const gameBoard = document.getElementById('game');
     if (!footer || !gameBoard) return;
@@ -53,5 +53,5 @@ export default (()=> {
       }
       gameBoard.classList.remove('drag-over');
     });
-  })();
+  }
   

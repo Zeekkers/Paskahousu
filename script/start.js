@@ -9,6 +9,7 @@ export default (() => {
   
   globalThis.updateState = (msg)=> {
     console.log(`[GAME] ${msg}`);
+    document.querySelector("feedback").textContent=`Tila: ${msg}`
   }
 
   globalThis.round = Number(sessionStorage.getItem("round") || 1);
@@ -55,7 +56,7 @@ export default (() => {
       // 2) haetaan pelaajat (odottaa getAllPlayers-promisea)
       .then(() => import("./2-getAllPlayers.js"))
       .then(m => m.default())
-      .then(() => updateState(`Pelaajia löydetty ${playerCount}`))
+      .then(() => updateState(`Pelaajien määrä ${playerCount}`))
 
       // 3) jaa kortit (odottaa dealCards-promisea)
       .then(()=> import("./3-dealCards.js"))
@@ -65,6 +66,7 @@ export default (() => {
       // 4) valitaan aloittaja pienimmän kortin mukaan
       .then(()=> import("./4-chooseWhoStarts.js"))
       .then(m=> m.default())
+      .then((result)=> updateState(result))
 
       // 5) pelataan aloittajan kortti
       .then(()=> import("./5-playFirstCard.js"))
@@ -73,8 +75,18 @@ export default (() => {
   })
   // B) Jatka normaalia pelisilmukkaa (round > 1 tai luontijaon jälkeen)
   .then(() => {
-    updateState(`Aloitetaan kierros ${round}.`);
-    // 0) tarkista ketä aloittaa 
+
+    // 6) tarkistetaan aktiiviset säännöt
+    return import("./6-getActiveRules.js")
+   .then(m => m.default())
+
+   // 7) Aloita kierroksen seuranta
+   .then(()=> import("./7-trackRound.js"))
+   .then(m => m.default())
+  })
+  // Y) Aloitetaan uusi kierros
+  .finally(()=>{ round++
+    updateState(`Aloitetaan kierros ${round}.`)
   })
   // X) Virheenkäsittely
   .catch(err => console.error(`[GAME] ${err}`));

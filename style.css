@@ -1,9 +1,10 @@
+@import url('./style/header.css');
 @import url('./style/main.css');
 @import url('./style/card.css');
 @import url('./style/footer.css');
 @import url('./style/table.css');
 @import url('./style/hand.css');
-@import url('./style/game-pile.css');
+
 
 :root {
     --white: #f5faff;
@@ -32,9 +33,4 @@ body {
     overflow: hidden;
     margin: 0;
     padding: 0;
-}
-header {
-    position: relative;
-    width: 100%;
-    height: 15vh;
 }
