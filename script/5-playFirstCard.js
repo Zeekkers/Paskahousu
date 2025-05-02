@@ -1,4 +1,5 @@
 import { magneticPull } from "./shared/magneticPull.js";
+import enableHandsProxy from "./shared/enableHandsProxy.js";enableHandsProxy();
 import gamePile from "./shared/gamePile.js";gamePile();
 let whoStarts
 const slot = document.getElementById("slot");
@@ -21,7 +22,8 @@ if (starter === "user") {
                 width: "8%",
             })
     )
-
+    popCardFromHands(firstPlay);
+    hands[starter]
 resolve(updateState(`Käyttäjä aloitti pelin`))
 return
 }
@@ -48,7 +50,8 @@ magneticPull(slot, firstPlay).then(()=>
             width: "8%",
         }));
 
-
+        popCardFromHands(firstPlay);
+        hands[starter]
 
     resolve(updateState(`Tietokone aloitti pelin`));
     return

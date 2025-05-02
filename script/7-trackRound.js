@@ -17,11 +17,10 @@ export default async function trackRound() {
     }
 
     globalThis.activePlayer = players[index];
-    console.log(`Aktiivinen pelaaja: ${activePlayer}`);
 
     await getActiveRules();
-    console.log(activeRank);
-    console.log(activeRules);
+    
+    console.log(hands)
 
     if (players[index] === 'user') {
       updateState("Sinun vuorosi");
@@ -32,6 +31,8 @@ export default async function trackRound() {
     }
 
     index = (index + 1) % players.length;
+
+    hands[activePlayer];
 
   } while (index !== startIndex);
 }

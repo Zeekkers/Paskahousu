@@ -58,9 +58,11 @@ export default function makeDraggable () {
                   transform: "translate(-50%,0%)",
                   width: "8%",
                   cursor: "none",
-                  
+
 
               })
+
+              popCardFromHands(card)
       
         card.classList.remove('dragging');
       }

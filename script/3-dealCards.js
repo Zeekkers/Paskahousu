@@ -59,6 +59,17 @@ export default function dealCards() {
     const totalTime = dealCount * dealDelayStep + moveDuration;
     setTimeout(() => {
       globalThis.hands = hands
+      globalThis.popCardFromHands = function(cardElement) {
+        for (const [player, hand] of Object.entries(hands)) {
+          const index = hand.indexOf(cardElement);
+          if (index !== -1) {
+            hand.splice(index, 1);
+            return player;
+          }
+        }
+        console.warn("[HANDS] Korttia ei löytynyt käsistä:", cardElement);
+        return null;
+      };
       resolve();
     }, totalTime);
   });

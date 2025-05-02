@@ -9,7 +9,6 @@ export default async function bot(instance) {
     return result.isValid === true;
   });
 
-  console.log('Valid cards for', instance, validCards);
 
   if (validCards.length === 0) {
     console.log('No valid cards.');
@@ -31,7 +30,6 @@ export default async function bot(instance) {
     }
   }
 
-  console.log('Best card to play:', bestCard);
 
   // ⏳ Odotetaan että #slot ilmestyy DOMiin
   const slot = await new Promise(resolve => {
@@ -65,4 +63,6 @@ export default async function bot(instance) {
     transform: "translate(-50%, 0%)",
     width: "8%"
   });
+
+  popCardFromHands(bestCard);
 }

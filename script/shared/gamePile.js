@@ -8,7 +8,6 @@ const observerConfig = {
   const observer = new MutationObserver((mutationsList) => {
     observer.disconnect();
     try {
-      console.log("lisätty");
       gamePile(); // lisää uusi slot jos puuttuu
     } finally {
       const currentPile = document.getElementById("game");
