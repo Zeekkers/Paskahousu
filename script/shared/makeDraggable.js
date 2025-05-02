@@ -57,6 +57,9 @@ export default function makeDraggable () {
                   left: "50%",
                   transform: "translate(-50%,0%)",
                   width: "8%",
+                  cursor: "none",
+                  
+
               })
       
         card.classList.remove('dragging');

@@ -20,6 +20,7 @@ export default async function trackRound() {
     console.log(`Aktiivinen pelaaja: ${activePlayer}`);
 
     await getActiveRules();
+    console.log(activeRank);
     console.log(activeRules);
 
     if (players[index] === 'user') {
