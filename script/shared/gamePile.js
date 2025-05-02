@@ -17,15 +17,31 @@ const observerConfig = {
   
   export default function gamePile() {
     const pile = document.getElementById("game");
+    const children = Array.from(pile.children);
   
-    // Tarkista ettei tyhjää slottia jo ole
-    const hasSlot = Array.from(pile.children).some(child => child.id === "slot");
+    const hasSlot = children.some(child => child.id === "slot");
     if (hasSlot) return;
   
     const slot = document.createElement("div");
     slot.id = "slot";
     pile.appendChild(slot);
+  
+    const folds = ['10', 'A'];
+    const lastFour = children.filter(el => el.tagName === "GAME-CARD").slice(-4);
+    const topCard = lastFour[lastFour.length - 1];
+  
+    const allSameRank =
+      lastFour.length === 4 &&
+      lastFour.every(el => el.getAttribute("card-rank") === lastFour[0].getAttribute("card-rank"));
+  
+    if (
+      topCard &&
+      (allSameRank || folds.includes(topCard.getAttribute("card-rank")))
+    ) {
+      import("./fold.js").then(m => m.default());
+    }
   }
+  
   
   // Käynnistä observer heti
   const pile = document.getElementById("game");

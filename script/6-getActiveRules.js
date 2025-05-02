@@ -1,8 +1,14 @@
+import playFirstCard from "./5-playFirstCard.js";
+
 const pictureCards = ['J', 'Q', 'K'];
 
 export default function getActiveRules() {
   return new Promise (resolve => {
-  delay(600).then(()=> {
+ 
+ 
+ 
+    delay(600).then(()=> {
+
   const topCard = document.querySelector('#game game-card:last-of-type');
 
   const rank = topCard.getAttribute('card-rank');

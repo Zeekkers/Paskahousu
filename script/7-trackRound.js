@@ -20,7 +20,6 @@ export default async function trackRound() {
 
     await getActiveRules();
     
-    console.log(hands)
 
     if (players[index] === 'user') {
       updateState("Sinun vuorosi");
