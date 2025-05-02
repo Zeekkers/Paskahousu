@@ -1,12 +1,11 @@
 export default function makeDraggable () {
     const footer = document.querySelector('footer');
-    const gameBoard = document.getElementById('game');
-    if (!footer || !gameBoard) return;
+    const slot = document.getElementById('slot');
+    if (!footer || !slot) return;
   
-    // 1. Varmistetaan, että kaikki kortit ovat vedettävissä
     footer.querySelectorAll('game-card').forEach(card => {
       card.draggable = true;
-      card.setAttribute('tabindex', '0'); // saavutettavuus: näppäimistötuki
+      card.setAttribute('tabindex', '0');
     });
   
     // 2. Dragstart – asetetaan siirrettävä data ja ghost-kuva
@@ -26,32 +25,43 @@ export default function makeDraggable () {
     });
   
     // 4. Pudotusalue – dragover: salli pudotus ja korosta alue
-    gameBoard.addEventListener('dragover', ev => {
+    slot.addEventListener('dragover', ev => {
       ev.preventDefault(); // pakollinen, jotta drop sallitaan
     });
   
-    gameBoard.addEventListener('dragenter', ev => {
-      if (ev.target === gameBoard) {
-        gameBoard.classList.add('drag-over');
+    slot.addEventListener('dragenter', ev => {
+      if (ev.target === slot) {
+        slot.classList.add('drag-over');
       }
     });
   
-    gameBoard.addEventListener('dragleave', ev => {
-      if (ev.target === gameBoard) {
-        gameBoard.classList.remove('drag-over');
+    slot.addEventListener('dragleave', ev => {
+      if (ev.target === slot) {
+        slot.classList.remove('drag-over');
       }
     });
   
     // 5. Drop – siirretään kortti DOMissa oikeaan paikkaan
-    gameBoard.addEventListener('drop', ev => {
+    slot.addEventListener('drop', ev => {
       ev.preventDefault();
       const cardId = ev.dataTransfer.getData('text/plain');
       const card = document.getElementById(cardId);
       if (card) {
-        gameBoard.appendChild(card);
+        slot.replaceWith(card)
+          Object.assign(
+              card.style,{
+                  transition: "all 1s",
+                  position: "absolute",
+                  top: "0",
+                  zIndex: "10",
+                  left: "50%",
+                  transform: "translate(-50%,0%)",
+                  width: "8%",
+              })
+      
         card.classList.remove('dragging');
       }
-      gameBoard.classList.remove('drag-over');
+      slot.classList.remove('drag-over');
     });
   }
   

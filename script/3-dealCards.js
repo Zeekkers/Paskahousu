@@ -16,7 +16,7 @@ export default function dealCards() {
     // tallenna kortit muistiin pelaajakohtaisesti
     const hands = players.reduce((acc, p) => { acc[p] = []; return acc; }, {});
 
-    const dealDelayStep = 350; // ms väli jokaisen kortin jaon välillä
+    const dealDelayStep = 500; // ms väli jokaisen kortin jaon välillä
     const moveDuration   = 500; // ms animaation kesto
 
     let dealCount = 0;

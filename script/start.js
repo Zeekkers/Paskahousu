@@ -1,93 +1,81 @@
-export default (() => {
+export default (async () => {
 
-// ===================
-// Globaalit helpperit
-// ===================
-  globalThis.delay = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-  
-  globalThis.updateState = (msg)=> {
+  // ===================
+  // Globaalit helperit
+  // ===================
+  globalThis.delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+  globalThis.updateState = (msg) => {
     console.log(`[GAME] ${msg}`);
-    document.querySelector("feedback").textContent=`Tila: ${msg}`
-  }
-
+    document.querySelector("feedback").textContent = `Tila: ${msg}`;
+  };
   globalThis.round = Number(sessionStorage.getItem("round") || 1);
-  let playersResult;
 
-
-  globalThis.addTrackedListener=(el, type, fn, opts)=> {
+  globalThis.addTrackedListener = (el, type, fn, opts) => {
     el._listeners = el._listeners || [];
     el._listeners.push({type, fn, opts});
     el.addEventListener(type, fn, opts);
-  }
+  };
 
-  globalThis.removeAllTracked=(el)=> {
+  globalThis.removeAllTracked = (el) => {
     if (!el._listeners) return;
     for (const {type, fn, opts} of el._listeners) {
       el.removeEventListener(type, fn, opts);
     }
     el._listeners.length = 0;
+  };
+
+  // ===================
+  // Odota DOM
+  // ===================
+  if (document.readyState === 'loading') {
+    await new Promise(res => window.addEventListener('DOMContentLoaded', res, { once: true }));
   }
-  
 
+  // ===================
+  // Alustukset
+  // ===================
+  let initialDealt = false;
+  const onKortteja = () => {
+    return Array.from(document.querySelectorAll("player-hand game-card")).length !== 0;
+  };
 
+  // ===================
+  // Pääsilmukka
+  // ===================
+  do {
+    // A) Ensimmäinen kierros: korttien jako
+    if (!initialDealt && round === 1) {
+      await import("./1-createAndShufflePack.js").then(m => m.default());
+      updateState("Pakka luotu ja sekoitettu.");
 
-// ================
-// Varsinainen Peli
-// ================
-  return new Promise(res => {
-    if (document.readyState === 'loading') {
-      window.addEventListener('DOMContentLoaded', res, { once: true });
-    } else {
-      res();
+      await import("./2-getAllPlayers.js").then(m => m.default());
+      updateState(`Pelaajien määrä ${playerCount}`);
+
+      await import("./3-dealCards.js").then(m => m.default());
+      updateState("Kortit jaettu.");
+
+      await import("./4-chooseWhoStarts.js")
+        .then(m => m.default())
+        .then(result => updateState(result));
+
+      await import("./5-playFirstCard.js").then(m => m.default());
+
+      initialDealt = true;
     }
-  })
-  // A) Jos round === 1, sekoita pakka ja jaa kortit
-  .then(() => {
-    if (round !== 1) {
-      return Promise.resolve();
-    }
-    // 1) luo ja sekoita pakka (odottaa shuffle-promisea)
-    return import("./1-createAndShufflePack.js")
-      .then(m => m.default)
-      .then(() => updateState("Pakka luotu ja sekoitettu."))
 
-      // 2) haetaan pelaajat (odottaa getAllPlayers-promisea)
-      .then(() => import("./2-getAllPlayers.js"))
-      .then(m => m.default())
-      .then(() => updateState(`Pelaajien määrä ${playerCount}`))
+    // B) Kaikki kierrokset: pelin normaali kulku
+    await import("./6-getActiveRules.js").then(m => m.default());
+    await import("./7-trackRound.js").then(m => m.default());
 
-      // 3) jaa kortit (odottaa dealCards-promisea)
-      .then(()=> import("./3-dealCards.js"))
-      .then(m => m.default())
-      .then(() => updateState("Kortit jaettu."))
+    round++;
+    sessionStorage.setItem("round", String(round));
+    updateState(`Aloitetaan kierros ${round}.`);
 
-      // 4) valitaan aloittaja pienimmän kortin mukaan
-      .then(()=> import("./4-chooseWhoStarts.js"))
-      .then(m=> m.default())
-      .then((result)=> updateState(result))
+  } while (!initialDealt || onKortteja());
 
-      // 5) pelataan aloittajan kortti
-      .then(()=> import("./5-playFirstCard.js"))
-      .then(m => m.default())
+  // ===================
+  // Peli päättyi
+  // ===================
+  updateState("Peli päättyi. Kaikki kortit pelattu.");
 
-  })
-  // B) Jatka normaalia pelisilmukkaa (round > 1 tai luontijaon jälkeen)
-  .then(() => {
-
-    // 6) tarkistetaan aktiiviset säännöt
-    return import("./6-getActiveRules.js")
-   .then(m => m.default())
-
-   // 7) Aloita kierroksen seuranta
-   .then(()=> import("./7-trackRound.js"))
-   .then(m => m.default())
-  })
-  // Y) Aloitetaan uusi kierros
-  .finally(()=>{ round++
-    updateState(`Aloitetaan kierros ${round}.`)
-  })
-  // X) Virheenkäsittely
-  .catch(err => console.error(`[GAME] ${err}`));
-})();
+})().catch(err => console.error(`[GAME] ${err}`));

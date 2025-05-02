@@ -7,7 +7,7 @@ const pack       = document.getElementById("pack");
 const countries  = ['♠','♥','♦','♣'];
 globalThis.cardRanks  = ['3','4','5','6','7','8','9','10','J','Q','K','A','2'];
 
-export default (async () => {
+export default async function createAndShufflePack ()  {
   // 1) Kerää kortit fragmenttiin ilman turhia reflowja
   const fragment = document.createDocumentFragment();
   for (const country of countries) {
@@ -27,4 +27,4 @@ export default (async () => {
 
   // 4) Odota vielä yksi frame, jotta selain ehtii piirtää lopullisen asennon
   await new Promise(r => requestAnimationFrame(r));
-})();
+}
