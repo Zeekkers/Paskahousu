@@ -6,6 +6,10 @@ export default function chooseWhoStarts() {
         // Kerää ja globalisoi pelaajat
         let players = Object.entries(hands).map(([player, cards]) => ({player}))
         globalThis.players = players.map(obj => obj.player)
+        sessionStorage.setItem(
+          "players",
+          JSON.stringify(players)   
+        );
          
 
         // Kerää pelaajat, joilla on kortteja kyseisellä arvolla
@@ -24,6 +28,7 @@ export default function chooseWhoStarts() {
           // Otetaan yksi näistä elementeistä (esim. ensimmäinen)
         globalThis.firstPlay = matching[0];
         globalThis.starter = Aloittaja
+        sessionStorage.setItem("starter", JSON.stringify(starter));
   
           resolve(`${JSON.stringify({ Aloittaja, Kortti: firstPlay })}`);
           return;

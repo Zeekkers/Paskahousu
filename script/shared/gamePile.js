@@ -40,6 +40,16 @@ const observerConfig = {
     ) {
       import("./fold.js").then(m => m.default());
     }
+    setTimeout(()=>{
+    children.forEach( (child, i)=> {
+      if (i !== 0) {
+      const y = (i-1);
+      child.style.transition= "all 0.1s"
+      setTimeout(()=>{
+      child.style.transform = `translate(-50%,-${y}px)`;
+    },100);
+      }
+      }),100});
   }
   
   

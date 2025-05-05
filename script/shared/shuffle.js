@@ -4,7 +4,6 @@ export function shuffleCards() {
   const cards       = Array.from(container.querySelectorAll("game-card"));
   const zIndices    = cards.map((_, i) => i);
   const firstDelay  = 100;   // ms ennen ensimmäistä siirtoa
-  const firstDur    = 1000;  // ms transform-animaation kesto
   const secondDelay = 1200;  // ms ennen toinen liike
   const secondDur   = 600;   // ms flip-animaation kesto
 

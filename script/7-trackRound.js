@@ -32,6 +32,7 @@ export default async function trackRound() {
     index = (index + 1) % players.length;
 
     hands[activePlayer];
+    console.log(hands)
 
   } while (index !== startIndex);
 }

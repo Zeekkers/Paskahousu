@@ -3,7 +3,7 @@ import { magneticPull } from "./magneticPull.js";
 export default function fold() {
   return new Promise((resolve) => {
     const cards = Array.from(document.querySelectorAll("#game game-card"));
-    const binPack = document.querySelector("#bin:first-child");
+    const binPack = document.querySelector("#bin *:first-child");
 
     if (cards.length === 0) return resolve();
 
@@ -19,7 +19,7 @@ export default function fold() {
     wrapper.style.zIndex = "10";
     wrapper.style.top = "0"
     wrapper.style.left="50%"
-    wrapper.style.transform="translate(-50%,0%)"
+    wrapper.style.transform="translate(-50%,0px)"
 
 
 
@@ -55,4 +55,3 @@ export default function fold() {
     }, 1000); // pieni viive käännöksen jälkeen
   });
 }
-

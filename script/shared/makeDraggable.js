@@ -55,11 +55,9 @@ export default function makeDraggable () {
                   top: "0",
                   zIndex: "10",
                   left: "50%",
-                  transform: "translate(-50%,0%)",
+                  transform: "translate(-50%,0)",
                   width: "8%",
                   cursor: "none",
-
-
               })
 
               popCardFromHands(card)

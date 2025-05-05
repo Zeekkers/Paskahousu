@@ -1,11 +1,16 @@
 Tekijät: Zeekkers, Jortsupetterson ja Chat SENPAI
 
 Globaalit muuttujat: 
+createAndShufflePack=cardRanks
 getAllPlayers=playerCount, 
-dealCards=hands, 
+dealCards=hands, popCardFromHands
 chooseWhoStarts=firstPlay, players, Aloittaja 
-startjs=updateState,round 
-getActiveRules=activeRules
+startjs=updateState,round,addTrackedListener,removeAllTracked
+getActiveRules=activeRules,activeRank
+trackRound=activePlayer
+enableHandsProxy=hands
+hand=children,dealPack
+
 
 A)
 1. createAndShufflePack

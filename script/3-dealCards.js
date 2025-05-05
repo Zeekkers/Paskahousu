@@ -58,7 +58,8 @@ export default function dealCards() {
     // 4) kun viimeinen animaatio on valmis, logataan bottien kädet ja resolve
     const totalTime = dealCount * dealDelayStep + moveDuration;
     setTimeout(() => {
-      globalThis.hands = hands
+      sessionStorage.setItem("hands", hands)
+      globalThis.hands = hands || sessionStorage.getItem("hands")
       globalThis.popCardFromHands = function(cardElement) {
         for (const [player, hand] of Object.entries(hands)) {
           const index = hand.indexOf(cardElement);

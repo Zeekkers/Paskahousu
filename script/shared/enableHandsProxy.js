@@ -12,7 +12,7 @@ function animateCardToHand(card, player) {
     const puller = document.getElementById("puller");
     if (puller) {
       setTimeout(() => {
-        magneticPull(puller, card)
+        magneticPull(puller, card);
       }, 500);
     }
   } else {
@@ -35,13 +35,15 @@ function fillToFive(array, playerKey) {
 }
 
 export default function enableHandsProxy() {
-  if (!hands) throw new Error("globalThis.hands is not defined");
+  if (!globalThis.hands) throw new Error("globalThis.hands is not defined");
 
-  globalThis.hands = new Proxy(hands, {
+  globalThis.hands = new Proxy(globalThis.hands, {
     get(target, prop) {
       if (Array.isArray(target[prop])) {
         if (target[prop].length < 5) {
           fillToFive(target[prop], prop);
+          // Päivitä sessionStorage aina kun käsi täytetään
+          sessionStorage.setItem('hands', JSON.stringify(target));
         }
         return target[prop];
       }
@@ -57,7 +59,7 @@ export default function enableHandsProxy() {
         target[prop] = value;
       }
 
-      // fallback-varmistus kaikille
+      // fallback-varmistus kaikille käsille
       for (const key of Object.keys(target)) {
         const hand = target[key];
         if (Array.isArray(hand) && hand.length < 5) {
@@ -65,6 +67,8 @@ export default function enableHandsProxy() {
         }
       }
 
+      // Päivitä sessionStorage aina kun hands-proxyn set-metodi aktivoituu
+      sessionStorage.setItem('hands', JSON.stringify(target));
       return true;
     }
   });

@@ -48,7 +48,7 @@ export default async function bot(instance) {
     position: "fixed",
     top: "-100%",
     left: "50%",
-    transform: "translate(-50%, 0%)"
+    transform: "translate(-50%, 0px)"
   });
 
   // 🧲 Suoritetaan magneticPull-animaatio
@@ -60,7 +60,7 @@ export default async function bot(instance) {
     position: "absolute",
     top: "0",
     left: "50%",
-    transform: "translate(-50%, 0%)",
+    transform: "translate(-50%, 0)",
     width: "8%"
   });
 
