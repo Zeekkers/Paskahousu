@@ -1,5 +1,5 @@
 import { magneticPull } from "./magneticPull.js";
-
+import updateBinContainer from "./updateBinContainer.js";
 export default function fold() {
   return new Promise((resolve) => {
     const cards = Array.from(document.querySelectorAll("#game game-card"));
@@ -50,6 +50,7 @@ export default function fold() {
             transform: "translate(-50%,0%)",
             width: "8%",
           });
+          updateBinContainer();
         resolve();
       });
     }, 1000); // pieni viive käännöksen jälkeen

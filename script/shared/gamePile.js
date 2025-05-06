@@ -34,12 +34,15 @@ const observerConfig = {
       lastFour.length === 4 &&
       lastFour.every(el => el.getAttribute("card-rank") === lastFour[0].getAttribute("card-rank"));
   
-    if (
-      topCard &&
-      (allSameRank || folds.includes(topCard.getAttribute("card-rank")))
-    ) {
-      import("./fold.js").then(m => m.default());
-    }
+      if (
+        topCard &&
+        (allSameRank || folds.includes(topCard.getAttribute("card-rank")))
+      ) {
+        import("./fold.js").then(m => m.default()).then(() => {
+          import("./updateBinContainer.js").then(b => b.default());
+        });
+      }
+      
     setTimeout(()=>{
     children.forEach( (child, i)=> {
       if (i !== 0) {
