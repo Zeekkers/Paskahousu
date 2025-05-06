@@ -6,6 +6,9 @@ export default function updateBinContainer() {
   const bin = document.getElementById("bin");
   if (!bin) return console.warn("Bin-container puuttuu.");
 
+  const oldCards = Array.from(bin.querySelectorAll("game-card"));
+  oldCards.forEach(card => card.remove());
+
   // Siirrä kortit binin sisään offseteillä
   foldCards.forEach((card, i) => {
     const offset = i * 1 / 2;
