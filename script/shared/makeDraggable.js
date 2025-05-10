@@ -8,7 +8,7 @@ export default function makeDraggable () {
       card.setAttribute('tabindex', '0');
     });
   
-    // 2. Dragstart – asetetaan siirrettävä data ja ghost-kuva
+   
     footer.addEventListener('dragstart', ev => {
       const card = ev.target.closest('game-card');
       if (!card) return;

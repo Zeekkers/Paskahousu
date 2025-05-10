@@ -1,5 +1,6 @@
 import getActiveRules from "./6-getActiveRules.js";
 import makeDraggable from "./shared/makeDraggable.js";
+import checkUserRulesOnHover from "./shared/checkUserRulesOnHover.js";
 import waitForUser from "./shared/waitForUser.js";
 import bot from "./shared/bot.js"
 
@@ -24,6 +25,7 @@ export default async function trackRound() {
     if (players[index] === 'user') {
       updateState("Sinun vuorosi");
       makeDraggable();
+      checkUserRulesOnHover();
       await waitForUser();
     } else {
       await bot(players[index]);

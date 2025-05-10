@@ -30,7 +30,7 @@ export default async function bot(instance) {
     }
   }
 
-
+  console.log(bestCard)
   // ⏳ Odotetaan että #slot ilmestyy DOMiin
   const slot = await new Promise(resolve => {
     const tryFind = () => {

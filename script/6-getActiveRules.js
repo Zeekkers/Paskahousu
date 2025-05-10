@@ -13,14 +13,14 @@ export default function getActiveRules() {
       // 2a) Jos ei korttia, käytetään oletussääntöjä ja palautetaan ne heti
       if (!topCard) {
         const defaultRules = {
-          canUsePictureCards:  true,
-          cantUsePictureCards: true,
+          canUsePictureCards:  false,
+          cantUsePictureCards: false,
           canAceMoveToBin:     false,
           canTenMoveToBin:     false,
         };
         globalThis.activeRules = defaultRules;
         globalThis.activeRank  = null;
-        resolve(defaultRules);
+        resolve();
         return; // Early return säästää turhia vertailuja ja alustusoperaatioita
       }
       
@@ -44,7 +44,7 @@ export default function getActiveRules() {
         activeRank:  rankAttr
       });
       
-      resolve(computedRules);
+      resolve();
     });
   });
 }
